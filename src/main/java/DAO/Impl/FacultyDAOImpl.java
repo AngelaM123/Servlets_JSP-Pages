@@ -86,7 +86,7 @@ public class FacultyDAOImpl implements FacultyDAO {
 
             int rowsUpdated = statement1.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("An existing faculty was updated");
+                System.out.println("An existing faculty was updated!");
             }
 
         } catch (SQLException e) {
