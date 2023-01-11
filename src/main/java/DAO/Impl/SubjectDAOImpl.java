@@ -30,7 +30,7 @@ public class SubjectDAOImpl implements SubjectDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            StringBuilder sql = new StringBuilder("select * from predmet where id = ");
+            StringBuilder sql = new StringBuilder("select * from subject where id = ");
             sql.append(id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 
@@ -56,7 +56,7 @@ public class SubjectDAOImpl implements SubjectDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from predmet");
+            ResultSet rs = statement.executeQuery("select * from subject");
             while (rs.next()) {
                 Subject subject = new Subject();
 
@@ -103,7 +103,7 @@ public class SubjectDAOImpl implements SubjectDAO {
         Integer id = 0;
 
         try {
-            String sql = "INSERT INTO predmet (name, semester, credits) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO subject (name, semester, credits) VALUES (?, ?, ?)";
             PreparedStatement statement1 = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement1.setString(1, subject.getName());
             statement1.setString(2, subject.getSemester());
@@ -113,14 +113,14 @@ public class SubjectDAOImpl implements SubjectDAO {
             int affectedRows = statement1.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("greska");
+                throw new SQLException("error");
             }
 
             try (ResultSet generatedKeys = statement1.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     id = generatedKeys.getInt(1);
                 } else {
-                    throw new SQLException("greska2");
+                    throw new SQLException("error2");
                 }
             }
         } catch (SQLException e) {
@@ -136,7 +136,7 @@ public class SubjectDAOImpl implements SubjectDAO {
     @Override
     public void delete(Integer id_deleting) throws SQLException {
         try {
-            String sql = "DELETE FROM predmet WHERE id=?";
+            String sql = "DELETE FROM subject WHERE id=?";
             PreparedStatement statement1 = connection.prepareStatement(sql);
             statement1.setInt(1, id_deleting);
 
@@ -161,8 +161,8 @@ public class SubjectDAOImpl implements SubjectDAO {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             StringBuilder sql = new StringBuilder("SELECT p.id as profId, p.name as profName, f.* \n" +
-                    "FROM obrazovanie.profesor as p \n" +
-                    "inner join obrazovanie.predmet as f on f.predmet_id = u.id AND f.id = ");
+                    "FROM education.professor as p \n" +
+                    "inner join education.subject as f on f.subject_id = u.id AND f.id = ");
             sql.append(subject_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 
@@ -192,7 +192,7 @@ public class SubjectDAOImpl implements SubjectDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            StringBuilder sql = new StringBuilder("select * from predmet where id = ");
+            StringBuilder sql = new StringBuilder("select * from subject where id = ");
             sql.append(subject_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 

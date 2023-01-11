@@ -33,7 +33,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return professorDAO.save(professor);    }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws SQLException {
         professorDAO.delete(id);
     }
 }

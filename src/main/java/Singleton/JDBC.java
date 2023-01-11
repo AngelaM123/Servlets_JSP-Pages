@@ -14,9 +14,9 @@ public class JDBC {
 
         List<Professor> professorList = new ArrayList<>();
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/obrazovanie", "root", "AngjelaWork123");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/education", "root", "AngjelaWork123");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from profesor ");
+            ResultSet resultSet = statement.executeQuery("select * from professor ");
 
             while (resultSet.next()) {
                 Professor professor = new Professor();

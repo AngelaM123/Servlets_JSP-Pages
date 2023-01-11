@@ -10,7 +10,7 @@ import java.util.List;
 public class UniversityServiceImpl implements UniversityService {
     UniversityDAOImpl universityDAO = new UniversityDAOImpl();
     @Override
-    public University getById(Integer id) {
+    public University getById(Integer id) throws SQLException {
         University university = universityDAO.getById(id);
         return university;
     }
@@ -26,12 +26,12 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public Integer save(University university) {
+    public Integer save(University university) throws SQLException {
         return universityDAO.save(university);
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws SQLException {
 
         universityDAO.delete(id);
 

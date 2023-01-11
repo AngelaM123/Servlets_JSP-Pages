@@ -22,12 +22,12 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void update(Subject subject) {
+    public void update(Subject subject) throws SQLException {
         subjectDAO.update(subject);
     }
 
     @Override
-    public Integer save(Subject subject) {
+    public Integer save(Subject subject) throws SQLException {
         return subjectDAO.save(subject);
     }
 

@@ -231,7 +231,7 @@ public class UniversityServlet extends HttpServlet {
             universityDTO = universityDAO.getUniversityDTOwithFac(uni_id);
         }else{
 
-            universityDTO = universityDAO.getUniversityDTOwithFac(uni_id);
+            universityDTO = universityDAO.getUniversityDTOwithOutFac(uni_id);
 
         }
 
