@@ -17,7 +17,7 @@ public class TestSingleton {
             conn = SingletonConnection.getInstance().getConnection();
 
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("Select * from profesor");
+            ResultSet rs = stmt.executeQuery("Select * from professor");
 
             while (rs.next()) {
                 System.out.println("id:" + rs.getInt("id"));
@@ -34,7 +34,7 @@ public class TestSingleton {
             conn = SingletonConnection.getInstance().getConnection();
 
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("Select * from profesor");
+            ResultSet rs = stmt.executeQuery("Select * from professor");
 
             while (rs.next()) {
                 System.out.println("id:" + rs.getInt("id"));

@@ -32,7 +32,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            StringBuilder sql = new StringBuilder("select * from profesor where id = ");
+            StringBuilder sql = new StringBuilder("select * from professor where id = ");
             sql.append(id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 
@@ -59,7 +59,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from profesor");
+            ResultSet rs = statement.executeQuery("select * from professor");
             while (rs.next()) {
                 Professor professor = new Professor();
                 professor.setName(rs.getString("name"));
@@ -146,9 +146,9 @@ public class ProfessorDAOImpl implements ProfessorDAO {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
 
-            StringBuilder sql = new StringBuilder("SELECT p.id as profId, p.ime as prfName, f.* \n" +
-                    "FROM obrazovanie.profesor as p \n" +
-                    "inner join obrazovanie.profesor as f on f.faculty_id = p.id AND f.id = ");
+            StringBuilder sql = new StringBuilder("SELECT p.id as profId, p.name as prfName, f.* \n" +
+                    "FROM education.professor as p \n" +
+                    "inner join education.professor as f on f.faculty_id = p.id AND f.id = ");
             sql.append(professor_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 
@@ -161,8 +161,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
                 professorDTO.setPrimary_subject1(resultSet.getString("primary_subject1"));
                 professorDTO.setPrimary_subject2(resultSet.getString("primary_subject2"));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("SQLException in getFacultyDTOwithUniv" + e.getMessage());
             throw e;
         }
@@ -176,7 +175,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            StringBuilder sql = new StringBuilder("select * from profesor where id = ");
+            StringBuilder sql = new StringBuilder("select * from professor where id = ");
             sql.append(professor_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 
@@ -190,8 +189,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
                 professorDTO.setPrimary_subject2(resultSet.getString("primary_subject2"));
 
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("SQLException in getProfessorDTOwithOutFac" + e.getMessage());
             throw e;
         }

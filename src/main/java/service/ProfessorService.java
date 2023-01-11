@@ -11,5 +11,5 @@ public interface ProfessorService {
     List<Professor> getAll() throws SQLException;
     void update(Professor professor) throws SQLException;
     Integer save(Professor professor) throws SQLException;
-    void delete(Integer id );
+    void delete(Integer id ) throws SQLException;
 }

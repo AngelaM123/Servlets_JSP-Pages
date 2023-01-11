@@ -86,10 +86,10 @@ public class FacultyDAOImpl implements FacultyDAO {
 
             int rowsUpdated = statement1.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("An existing faculty was updated");
+                System.out.println("An existing faculty was updated!");
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("error occured " + e.getMessage());
             throw e;
 
@@ -97,12 +97,13 @@ public class FacultyDAOImpl implements FacultyDAO {
 
     }
 
-//i need to make explenation like this one for every method
+        //i need to make explenation like this one for every method
 
-    /**
-     * @param faculty
-     * @return
-     */
+        /**
+        * @param faculty
+        * @return
+        */
+
 
     @Override
     public Integer save(Faculty faculty) throws SQLException {
@@ -119,7 +120,7 @@ public class FacultyDAOImpl implements FacultyDAO {
             int affectedRows = statement1.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("greska");
+                throw new SQLException("error");
             }
 
             try (ResultSet generatedKeys = statement1.getGeneratedKeys()) {
@@ -149,7 +150,7 @@ public class FacultyDAOImpl implements FacultyDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error during delete faks " + e.getMessage());
+            System.out.println("Error during delete faculty " + e.getMessage());
             throw e;
         }
     }
@@ -162,9 +163,9 @@ public class FacultyDAOImpl implements FacultyDAO {
         try {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            StringBuilder sql = new StringBuilder("SELECT u.id as uniId, u.ime as uniName, f.* \n" +
-                    "FROM obrazovanie.university as u \n" +
-                    "inner join obrazovanie.faculty as f on f.university_id = u.id AND f.id = ");
+            StringBuilder sql = new StringBuilder("SELECT u.id as uniId, u.name as uniName, f.* \n" +
+                    "FROM education.university as u \n" +
+                    "inner join education.faculty as f on f.university_id = u.id AND f.id = ");
             sql.append(faculty_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 

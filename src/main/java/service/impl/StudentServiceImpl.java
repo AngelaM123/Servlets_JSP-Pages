@@ -18,7 +18,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getAll() {
+    public List<Student> getAll() throws SQLException {
         return studentDAO.getAll();
     }
 
@@ -28,11 +28,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Integer save(Student student) {
+    public Integer save(Student student) throws SQLException {
         return studentDAO.save(student);    }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws SQLException {
         studentDAO.delete(id);
     }
 }

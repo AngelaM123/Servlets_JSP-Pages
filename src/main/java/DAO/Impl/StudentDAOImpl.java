@@ -164,8 +164,8 @@ public class StudentDAOImpl implements StudentDAO {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             StringBuilder sql = new StringBuilder("SELECT u.id as uniId, u.ime as uniName, f.* \n" +
-                    "FROM obrazovanie.university as u \n" +
-                    "inner join obrazovanie.student as f on f.university_id = u.id AND f.id = ");
+                    "FROM education.university as u \n" +
+                    "inner join education.student as f on f.university_id = u.id AND f.id = ");
             sql.append(student_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
 

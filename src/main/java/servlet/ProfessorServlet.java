@@ -34,43 +34,43 @@ public class ProfessorServlet extends HttpServlet {
         String action = request.getParameter("action");
         try {
 
-            if(request.getParameter("fullData") != null){
+            if (request.getParameter("fullData") != null) {
                 Boolean fullData = Boolean.parseBoolean(request.getParameter("fullData"));
                 jsondtoprofessor(request, response, fullData);
-            } else{
+            } else {
 
                 switch (action) {
 
                     case "save":
                         saveProfessor(request, response);
-                        request.getRequestDispatcher("jsp/successful.jsp").forward(request , response);
+                        request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
 
                         break;
 
                     case "delete":
-                        if(request.getParameter("id") != null){
+                        if (request.getParameter("id") != null) {
                             //request.setAttribute("faculty", faculty);
                             deleteProfessor(request, response);
-                            request.setAttribute("link","http://localhost:8080/ProfessorServlet?action=all");
+                            request.setAttribute("link", "http://localhost:8080/ProfessorServlet?action=all");
                             request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("message"," id dosen't exist so professor can't be deleted");
-                            request.getRequestDispatcher("jsp/error.jsp").forward(request,response);
+                            request.setAttribute("message", " id dosen't exist so professor can't be deleted");
+                            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 
                         }
                         break;
 
                     case "update":
                         updateProfessor(request, response);
-                        request.setAttribute("link","http://localhost:8080/ProfessorServlet?action=all");
-                        request.getRequestDispatcher("jsp/successful.jsp").forward(request , response);
+                        request.setAttribute("link", "http://localhost:8080/ProfessorServlet?action=all");
+                        request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
                         break;
 
                     case "all":
 
                         List<Professor> professorsListfromMethod = allProfessors(request, response);
 
-                        if(request.getParameter("jsonFormat" ) != null) {
+                        if (request.getParameter("jsonFormat") != null) {
                             String professorJsonString = this.gson.toJson(professorsListfromMethod);
                             PrintWriter pr = response.getWriter();
                             pr.print(professorJsonString);
@@ -78,19 +78,19 @@ public class ProfessorServlet extends HttpServlet {
 
                         } else {
                             request.setAttribute("professorListfromJsp", professorsListfromMethod);
-                            request.getRequestDispatcher("jsp/professorList.jsp").forward(request , response);
+                            request.getRequestDispatcher("jsp/professorList.jsp").forward(request, response);
                         }
 
                         break;
 
                     case "byId":
-                        if(request.getParameter("id") != null){
-                            Professor professor =  professorById(request,response);
+                        if (request.getParameter("id") != null) {
+                            Professor professor = professorById(request, response);
                             request.setAttribute("professor", professor);
                             request.getRequestDispatcher("jsp/professorById.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("message","missing id in query parametar");
-                            request.getRequestDispatcher("jsp/error.jsp").forward(request,response);
+                            request.setAttribute("message", "missing id in query parametar");
+                            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 
                         }
 
@@ -104,13 +104,13 @@ public class ProfessorServlet extends HttpServlet {
                 }
             }
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new ServletException(ex);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     private List<Professor> allProfessors(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<Professor> professorsList = professorDAO.getAll();
@@ -146,9 +146,9 @@ public class ProfessorServlet extends HttpServlet {
         String surname = request.getParameter("surname");
         String primary_subject1 = request.getParameter("primary_subject1");
         String primary_subject2 = request.getParameter("primary_subject2");
-        Professor professor = new Professor( name, surname, age, primary_subject1, primary_subject2);
+        Professor professor = new Professor(name, surname, age, primary_subject1, primary_subject2);
         professorDAO.save(professor);
-       // response.sendRedirect("list");
+        // response.sendRedirect("list");
     }
 
     private void updateProfessor(HttpServletRequest request, HttpServletResponse response)
@@ -203,13 +203,12 @@ public class ProfessorServlet extends HttpServlet {
         }
 
         String primary_subject2 = request.getParameter("primary_subject2");
-        if (primary_subject2!= null) {
+        if (primary_subject2 != null) {
             prof.setPrimary_subject2(primary_subject2);
         }
 
-        //proveri dali e vaka za age
         String profesorAge = request.getParameter("age");
-        if(profesorAge!= null){
+        if (profesorAge != null) {
             int age = Integer.parseInt(profesorAge);
             prof.setAge(age);
         }
@@ -220,52 +219,51 @@ public class ProfessorServlet extends HttpServlet {
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         professorDAO.delete(id);
-       // response.sendRedirect("list");
+        // response.sendRedirect("list");
 
     }
 
-    private void createProfessor(HttpServletRequest request,HttpServletResponse response) throws ServletException,Exception,IOException{
+    private void createProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, Exception, IOException {
 
         Gson gson = new Gson();
         ProfessorDAOImpl professorDAO = new ProfessorDAOImpl();
         Professor professor = new Professor();
         //response.setContentType("application/json");
 
-        if(request.getParameter("id")!= null){
+        if (request.getParameter("id") != null) {
             String profesorID = request.getParameter("id");
             int id = Integer.parseInt(profesorID);
             professor.setId(id);
         }
-        if(request.getParameter("age")!= null){
+        if (request.getParameter("age") != null) {
             String profesorAge = request.getParameter("age");
             int age = Integer.parseInt(profesorAge);
             professor.setAge(age);
         }
-        if(request.getParameter("name")!= null){
+        if (request.getParameter("name") != null) {
             String name = request.getParameter("name");
             professor.setName(name);
         }
-        if(request.getParameter("surname")!= null){
+        if (request.getParameter("surname") != null) {
             String surname = request.getParameter("surname");
             professor.setSurname(surname);
         }
-        if(request.getParameter("primary_subject1")!= null){
+        if (request.getParameter("primary_subject1") != null) {
             String primary_subject1 = request.getParameter("primary_subject1");
             professor.setSurname(primary_subject1);
         }
-        if(request.getParameter("primary_subject2")!= null){
+        if (request.getParameter("primary_subject2") != null) {
             String primary_subject2 = request.getParameter("primary_subject2");
             professor.setSurname(primary_subject2);
         }
 
         // convert Java object Professor to Json object
-        try{
+        try {
             String jsonNewProfessor = gson.toJson(professor);
             professorDAO.save(professor);
             response.getWriter().print(jsonNewProfessor);
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             String errorCreate = "error in professorDAO.save try";
             response.getWriter().print(errorCreate);
         }
@@ -275,12 +273,12 @@ public class ProfessorServlet extends HttpServlet {
 
     }
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
 
     }
-    private void jsondtoprofessor(HttpServletRequest request, HttpServletResponse response,boolean fullData)
+
+    private void jsondtoprofessor(HttpServletRequest request, HttpServletResponse response, boolean fullData)
             throws SQLException, Exception, IOException {
 
 
@@ -288,12 +286,12 @@ public class ProfessorServlet extends HttpServlet {
         ProfessorDAOImpl professorDAO = new ProfessorDAOImpl();
         ProfessorDTO professorDTO = new ProfessorDTO();
         //response.setContentType("application/json");
-        int professor_id = Integer.parseInt(request.getParameter("id" ));
+        int professor_id = Integer.parseInt(request.getParameter("id"));
 
-        if(fullData) {
+        if (fullData) {
 
             professorDTO = professorDAO.getProfessorDTOwithFac(professor_id);
-        }else{
+        } else {
 
             professorDTO = professorDAO.getProfessorDTOwithOutFac(professor_id);
 

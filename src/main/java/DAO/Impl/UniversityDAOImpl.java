@@ -189,8 +189,8 @@ public class UniversityDAOImpl implements UniversityDAO {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             StringBuilder sql = new StringBuilder("SELECT f.id as facId, f.ime as uniName, u.* \n" +
-                    "FROM obrazovanie.faculty as f \n" +
-                    "inner join obrazovanie.university as u on u.university_id = f.id AND u.id = ");
+                    "FROM education.faculty as f \n" +
+                    "inner join education.university as u on u.university_id = f.id AND u.id = ");
 
             sql.append(uni_id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
@@ -241,18 +241,5 @@ public class UniversityDAOImpl implements UniversityDAO {
 }
 
 
-/*    public void cascadeUniFaxCheck(Integer uni_id_check) { // public boolean
-        try {
-            String sql = "SELECT * FROM obrazovanie.fakultet WHERE fakultet.univerzitet_id = ?";
-            PreparedStatement statement1 = connection.prepareStatement(sql);
-            statement1.setInt(1, uni_id_check);
-
-            int rowsUpdated = statement1.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println("error");
-        }
-
-    }*/
 
 
