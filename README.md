@@ -1,5 +1,5 @@
 # Servlets_JSP-Pages
-DAO Layer with Servlets and JSP pages
+Servlets and JSP pages
 
 Description
 
@@ -41,6 +41,7 @@ Servlets
 A maven dependency is added in pom.xml: javax.servlet-api.
 web.xml configuration file is added in WEB-INF folder.
 There are servlets java classes for each model class and servlets for error handling.
+The following maven dependencies are also added: gson, jstl, junit.
 
 Starting the project
 
@@ -52,3 +53,7 @@ Starting the project
 6. A tomcat server is used for running the servlets, locally.
 7. The project can be run via the model servlets and the app is running via the jsp files in the browser.
 
+Business Logic
+
+The project is a user friendly graphic interface which allows visual management of the database education.
+The GUI is presented with bootstrap and JSP pages.
