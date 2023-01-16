@@ -51,7 +51,24 @@ Starting the project
 4. There should be active local mysql connection of an identical database.
 5. Provide the database user, password and url into the SingletonConnection.java class.
 6. A tomcat server is used for running the servlets, locally.
-7. The project can be run via the model servlets and the app is running via the jsp files in the browser.
+7. The project can be run with adding a run configuration and these are the steps:
+- from the RUN menu choose Edit configuration
+- from the Run/Debug Configurations window left panel, click add new and from the submenu choose Smart Tomcat.
+- write the name of the local tomcat server
+- under Tomcat server: browse to location of the Tomcat server folder (download)
+- deployment directory should remain webapp
+- context path can be just a /
+- server port = 8080 and admin port = 8005
+- before lunch should remain just Bulid
+- click ok.
+
+Running the project
+
+1. Run/Debug from the RUN menu ,the configuration of the local tomcat server (shift+F10/F9)2
+2. open http://localhost:8080/ in browser
+3. there should be running index.jsp with a welcome message.
+4. To run a specific JSP page use a servlet name after the url and put "?action=" folowed by parameters such as all, new, save ets.
+e.g. http://localhost:8080/ProfessorServlet?action=all, 
 
 Business Logic
 
