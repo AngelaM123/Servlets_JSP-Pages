@@ -1,6 +1,5 @@
 package DTO;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class FacultyDTO {
@@ -76,6 +75,18 @@ public class FacultyDTO {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FacultyDTO that = (FacultyDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(location, that.location) && Objects.equals(study_field, that.study_field) && Objects.equals(uniName, that.uniName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, location, study_field, uniName);
+    }
 }
 
 

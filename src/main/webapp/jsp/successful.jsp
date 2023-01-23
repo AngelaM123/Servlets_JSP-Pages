@@ -35,26 +35,6 @@
 
     </div>
 </div>
-<%--<button class="btn-close-white" >
-    <a href="${link}">Updated List</a>
-</button>--%>
-
-
-<%--<button class="btn-close-white">
-    <a href="/FacultyServlet?action=all">List of Faculties</a>
-
-</button>--%>
-
-<%--
-<script>
-    window.setTimeout(function(){
-
-        window.location.href = "http://localhost:8080/FacultyServlet?action=all";
-
-    }, 5000);
-
-</script>
---%>
 
 
 </body>

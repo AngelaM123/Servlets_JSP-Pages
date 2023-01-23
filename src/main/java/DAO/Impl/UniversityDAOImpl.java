@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UniversityDAOImpl implements UniversityDAO {
-    //Connection connection = null;
+
     static Connection connection;
 
     static {
@@ -30,10 +30,10 @@ public class UniversityDAOImpl implements UniversityDAO {
             connection = SingletonConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             StringBuilder sql = new StringBuilder("select * from university where id = ");
-            //sql.append("1 ; drop table univerzitet");//sql injection
+
             sql.append(id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
-            //University university = new University();
+
             while (resultSet.next()) {
                 university.setName(resultSet.getString("name"));
                 university.setId(resultSet.getInt("id"));
@@ -54,7 +54,7 @@ public class UniversityDAOImpl implements UniversityDAO {
 
         List<University> universityList = new ArrayList<>();
         try {
-            // connection = SingletonConnection.getInstance().getConnection();
+
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select * from university");
             while (rs.next()) {
@@ -77,12 +77,9 @@ public class UniversityDAOImpl implements UniversityDAO {
     @Override
     public void update(University university) throws SQLException {
 
-        // List<University> universityList1 = new ArrayList<>();
         try {
             connection = SingletonConnection.getInstance().getConnection();
-            // Statement statement = connection.createStatement();
-            // ResultSet rs = statement.executeQuery("UPDATE Univerzitet SET name = Turizam , description = private university");
-            // String sql = "UPDATE Univerzitet SET name = Turizam , description = private university";
+
             String sql = "UPDATE university SET name=?,description=? WHERE id=?";
             PreparedStatement statement1 = connection.prepareStatement(sql);
             statement1.setString(1, university.getName());
@@ -157,8 +154,6 @@ public class UniversityDAOImpl implements UniversityDAO {
     }
 
     @Override
-
-
     public boolean cascadeUniFaxCheck(Integer uni_id_check) throws SQLException {
         try {
             String sql = "SELECT * FROM obrazovanie.faculty WHERE faculty.university_id = ?";

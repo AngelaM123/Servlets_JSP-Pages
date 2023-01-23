@@ -1,25 +1,20 @@
 package servlet;
 
 import DAO.Impl.FacultyDAOImpl;
-import DAO.FacultyDAO;
 import DTO.FacultyDTO;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import model.Faculty;
 import service.FacultyService;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/FacultyServlet")
 public class FacultyServlet extends HttpServlet {
@@ -39,8 +34,6 @@ public class FacultyServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         try {
-            // Boolean.parseBoolean(request.getParameter("fullData"));
-            //String jsondtofaculty = request.getParameter("jsondtofaculty");
 
             if (request.getParameter("fullData") != null) {
                 Boolean fullData = Boolean.parseBoolean(request.getParameter("fullData"));
@@ -87,7 +80,7 @@ public class FacultyServlet extends HttpServlet {
                             pr.flush();
 
                         } else {
-                            request.setAttribute("facultyListfromJsp", facultiesListfromMethod);//komunikacija jsp so servlet
+                            request.setAttribute("facultyListfromJsp", facultiesListfromMethod);//communication with srevlet
                             request.getRequestDispatcher("jsp/facultyList.jsp").forward(request, response);
                         }
 
@@ -95,10 +88,8 @@ public class FacultyServlet extends HttpServlet {
 
                     case "byId":
                         if (request.getParameter("id") != null) {
-                            Faculty faculty = facultyById(request, response);// prva linija
-                            //request.getRequestDispatcher("jsp/facultyDetails.jsp").forward(request , response);
-                            // primer spojuvanje na edinechen fakultet od metodot so onoj fakultet od JSP
-                            // stringot "faculty" doagja od JSP
+                            Faculty faculty = facultyById(request, response);
+
                             request.setAttribute("faculty", faculty);
                             request.getRequestDispatcher("jsp/facultyById.jsp").forward(request, response);
                         } else {
@@ -126,15 +117,8 @@ public class FacultyServlet extends HttpServlet {
 
     private List<Faculty> allFaculties(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        List<Faculty> facultiesList = facultyDAO.getAll(); // only the left part
-        // JSON part
-        /*
-        String facultyJsonString = this.gson.toJson(facultiesHere);
-        PrintWriter pr = response.getWriter();
-        pr.print(facultyJsonString);
-        pr.flush();
-         */
-        //now we have to connect word facultiesHere(this list) with the list in JSP file
+        List<Faculty> facultiesList = facultyDAO.getAll();
+
         return facultiesList;
     }
 
@@ -143,10 +127,7 @@ public class FacultyServlet extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         Faculty faculty = facultyDAO.getById(id);
-       /* String facultyJsonString = this.gson.toJson(faculty);
-        PrintWriter pr = response.getWriter();
-        pr.print(facultyJsonString);
-        pr.flush();*/
+
         return faculty;
 
     }
@@ -159,7 +140,7 @@ public class FacultyServlet extends HttpServlet {
         String study_field = request.getParameter("study_field");
         Faculty faculty = new Faculty(name, location, study_field);
         facultyDAO.save(faculty);
-        //response.sendRedirect("Indeks");
+
     }
 
     private void updateFaculty(HttpServletRequest request, HttpServletResponse response)
@@ -203,16 +184,14 @@ public class FacultyServlet extends HttpServlet {
         Gson gson = new Gson();
         FacultyDAOImpl facultyDAO = new FacultyDAOImpl();
         FacultyDTO facultyDTO = new FacultyDTO();
-        //response.setContentType("application/json");
+
         int faculty_id = Integer.parseInt(request.getParameter("id"));
 
         if (fullData) {
-            //Query Faculty + university name
-            //facultyDTO = dao.getSoUniv(id)
+
             facultyDTO = facultyDAO.getFacultyDTOwithUni(faculty_id);
         } else {
-            // Query only Faculty
-            ////facultyDTO = dao.getFaculty(id)
+
             facultyDTO = facultyDAO.getFacultyDTOwithOutUni(faculty_id);
 
         }

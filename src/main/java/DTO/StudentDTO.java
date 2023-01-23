@@ -1,5 +1,7 @@
 package DTO;
 
+import java.util.Objects;
+
 public class StudentDTO {
 
 
@@ -81,5 +83,18 @@ public class StudentDTO {
                 ", surname='" + surname + '\'' +
                 ", uniName='" + uniName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentDTO that = (StudentDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(indeks, that.indeks) && Objects.equals(name, that.name) && Objects.equals(location, that.location) && Objects.equals(surname, that.surname) && Objects.equals(uniName, that.uniName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, indeks, name, location, surname, uniName);
     }
 }

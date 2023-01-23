@@ -1,27 +1,19 @@
 package servlet;
 
-import DAO.Impl.FacultyDAOImpl;
 import DAO.Impl.UniversityDAOImpl;
-import DAO.UniversityDAO;
-import DTO.FacultyDTO;
 import DTO.UniversityDTO;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import model.Faculty;
 import model.University;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/UniversityServlet")
 public class UniversityServlet extends HttpServlet {
@@ -40,28 +32,28 @@ public class UniversityServlet extends HttpServlet {
         String action = request.getParameter("action");
         try {
 
-            if(request.getParameter("fullData") != null){
+            if (request.getParameter("fullData") != null) {
                 Boolean fullData = Boolean.parseBoolean(request.getParameter("fullData"));
                 jsondtoUniversity(request, response, fullData);
-            } else{
+            } else {
 
                 switch (action) {
 
                     case "save":
                         saveUniversity(request, response);
-                        request.getRequestDispatcher("jsp/successful.jsp").forward(request , response);
+                        request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
 
                         break;
 
                     case "delete":
-                        if(request.getParameter("id") != null){
-                            University university =  universityById(request,response);
+                        if (request.getParameter("id") != null) {
+                            University university = universityById(request, response);
                             //request.setAttribute("faculty", faculty);
                             deleteUniversity(request, response);
                             request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("message"," id dosen't exist so university can't be deleted");
-                            request.getRequestDispatcher("jsp/error.jsp").forward(request,response);
+                            request.setAttribute("message", " id dosen't exist so university can't be deleted");
+                            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 
                         }
 
@@ -69,15 +61,15 @@ public class UniversityServlet extends HttpServlet {
 
                     case "update":
                         updateUniversity(request, response);
-                        request.setAttribute("link","http://localhost:8080/UniversityServlet?action=all");
-                        request.getRequestDispatcher("jsp/successful.jsp").forward(request , response);
+                        request.setAttribute("link", "http://localhost:8080/UniversityServlet?action=all");
+                        request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
                         break;
 
                     case "all":
 
                         List<University> universitiesListfromMethod = allUniversitys(request, response);
 
-                        if(request.getParameter("jsonFormat" ) != null) {
+                        if (request.getParameter("jsonFormat") != null) {
                             String universityJsonString = this.gson.toJson(universitiesListfromMethod);
                             PrintWriter pr = response.getWriter();
                             pr.print(universityJsonString);
@@ -85,20 +77,20 @@ public class UniversityServlet extends HttpServlet {
 
                         } else {
                             request.setAttribute("universityListfromJsp", universitiesListfromMethod);
-                            request.getRequestDispatcher("jsp/universityList.jsp").forward(request , response);
+                            request.getRequestDispatcher("jsp/universityList.jsp").forward(request, response);
                         }
 
                         break;
 
                     case "byId":
-                        if(request.getParameter("id") != null){
-                            University university =  universityById(request,response);
+                        if (request.getParameter("id") != null) {
+                            University university = universityById(request, response);
 
                             request.setAttribute("university", university);
                             request.getRequestDispatcher("jsp/universityById.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("message","missing id in query parametar");
-                            request.getRequestDispatcher("jsp/error.jsp").forward(request,response);
+                            request.setAttribute("message", "missing id in query parametar");
+                            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 
                         }
 
@@ -112,20 +104,17 @@ public class UniversityServlet extends HttpServlet {
                 }
             }
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new ServletException(ex);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     private List<University> allUniversitys(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<University> universitiesHere = universityDAO.getAll();
-       /* String universityJsonString = this.gson.toJson(universitiesHere);
-        PrintWriter pr = response.getWriter();
-        pr.print(universityJsonString);
-        pr.flush();*/
+
         return universitiesHere;
     }
 
@@ -134,13 +123,11 @@ public class UniversityServlet extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         University university = universityDAO.getById(id);
-       /* String facultyJsonString = this.gson.toJson(faculty);
-        PrintWriter pr = response.getWriter();
-        pr.print(facultyJsonString);
-        pr.flush();*/
+
         return university;
 
     }
+
     private void saveUniversity(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
 
@@ -149,7 +136,7 @@ public class UniversityServlet extends HttpServlet {
 
         University university = new University(name, description);
         universityDAO.save(university);
-        //response.sendRedirect("Indeks");
+
     }
 
     private void updateUniversity(HttpServletRequest request, HttpServletResponse response)
@@ -169,54 +156,22 @@ public class UniversityServlet extends HttpServlet {
         universityDAO.update(uni);
 
     }
+
     private void deleteUniversity(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
- /*       int id = Integer.parseInt(request.getParameter("id"));
 
-        if( universityDAO.cascadeUniFaxCheck(id)){
-            universityDAO.delete(id);
-        }
-        else {
-            throw new Exception ("Detected cascade or connection");
-
-        }
-        //response.sendRedirect("http://localhost:8080/Indeks/servlet6");
-
-        ServletContext sc = this.getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher("/servlet6");
-        rd.forward(request, response);*/
 
         int id = Integer.parseInt(request.getParameter("id"));
         universityDAO.delete(id);
     }
 
 
-/*    private void deleteUniversity(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-
-         if (rowsUpdated == 0) {
-                System.out.println("No cascade or connection between uni_id=" +
-                        uni_id_check + " and faculties detected");
-                // return true; ako vrakja boolean
-            }
-            else{
-                System.out.println("Detected cascade or connection between uni_id=" +
-                        uni_id_check + " and faculties");
-                // return false;
-            }
-        //response.sendRedirect("http://localhost:8080/Indeks/servlet6");
-
-        ServletContext sc = this.getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher("/servlet6");
-        rd.forward(request, response);
-    }*/
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
 
     }
-    private void jsondtoUniversity(HttpServletRequest request, HttpServletResponse response,boolean fullData)
+
+    private void jsondtoUniversity(HttpServletRequest request, HttpServletResponse response, boolean fullData)
             throws SQLException, Exception, IOException {
 
 
@@ -224,12 +179,12 @@ public class UniversityServlet extends HttpServlet {
         UniversityDAOImpl universityDAO = new UniversityDAOImpl();
         UniversityDTO universityDTO = new UniversityDTO();
 
-        int uni_id = Integer.parseInt(request.getParameter("id" ));
+        int uni_id = Integer.parseInt(request.getParameter("id"));
 
-        if(fullData) {
+        if (fullData) {
 
             universityDTO = universityDAO.getUniversityDTOwithFac(uni_id);
-        }else{
+        } else {
 
             universityDTO = universityDAO.getUniversityDTOwithOutFac(uni_id);
 

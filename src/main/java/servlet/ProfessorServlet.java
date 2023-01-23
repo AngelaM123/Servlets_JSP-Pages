@@ -1,22 +1,20 @@
 package servlet;
 
-import DAO.Impl.FacultyDAOImpl;
+
 import DAO.Impl.ProfessorDAOImpl;
-import DTO.FacultyDTO;
 import DTO.ProfessorDTO;
 import com.google.gson.Gson;
-import model.Faculty;
 import model.Professor;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/ProfessorServlet")
 public class ProfessorServlet extends HttpServlet {
@@ -114,14 +112,9 @@ public class ProfessorServlet extends HttpServlet {
     private List<Professor> allProfessors(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<Professor> professorsList = professorDAO.getAll();
-      /*  List<Professor> professorsHere = professorDAO.getAll();
-        String professorJsonString = this.gson.toJson(professorsHere);
-        PrintWriter pr = response.getWriter();
-        pr.print(professorJsonString);
-        pr.flush();*/
+
         return professorsList;
-            /*RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
-            dispatcher.forward(request, response);*/
+
     }
 
     private Professor professorById(HttpServletRequest request, HttpServletResponse response)
@@ -129,10 +122,7 @@ public class ProfessorServlet extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         Professor professor = professorDAO.getById(id);
-       /* String facultyJsonString = this.gson.toJson(faculty);
-        PrintWriter pr = response.getWriter();
-        pr.print(facultyJsonString);
-        pr.flush();*/
+
         return professor;
 
     }
@@ -148,42 +138,11 @@ public class ProfessorServlet extends HttpServlet {
         String primary_subject2 = request.getParameter("primary_subject2");
         Professor professor = new Professor(name, surname, age, primary_subject1, primary_subject2);
         professorDAO.save(professor);
-        // response.sendRedirect("list");
+
     }
 
     private void updateProfessor(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-   /*     int id = Integer.parseInt(request.getParameter("id"));
-        Professor prof = professorDAO.getById(id);
-
-
-        if(request.getParameter("age") != null){
-            Integer age = Integer.parseInt(request.getParameter("age"));
-            prof.setAge(age);
-        }
-        String name = request.getParameter("name");
-        if(name != null){
-            prof.setName(name);
-        }
-        String surname = request.getParameter("surname");
-        if(surname != null){
-            prof.setSurname(surname);
-        }
-        String primary_subject1 = request.getParameter("primary_subject1");
-        if(primary_subject1 != null){
-            prof.setPrimary_subject1(primary_subject1);
-        }
-        String primary_subject2 = request.getParameter("primary_subject2");
-        if(primary_subject2 != null){
-            prof.setPrimary_subject2(primary_subject2);
-        }
-
-        //Professor professor = new Professor(id, name, surname, age, primary_subject1, primary_subject2);
-        professorDAO.update(prof);
-        PrintWriter out = response.getWriter();
-
-        out.println("<p>successfully updated</p>");
-        //response.sendRedirect("/");*/
 
         int id = Integer.parseInt(request.getParameter("id"));
         Professor prof = professorDAO.getById(id);
@@ -219,7 +178,7 @@ public class ProfessorServlet extends HttpServlet {
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         professorDAO.delete(id);
-        // response.sendRedirect("list");
+
 
     }
 
@@ -228,7 +187,7 @@ public class ProfessorServlet extends HttpServlet {
         Gson gson = new Gson();
         ProfessorDAOImpl professorDAO = new ProfessorDAOImpl();
         Professor professor = new Professor();
-        //response.setContentType("application/json");
+
 
         if (request.getParameter("id") != null) {
             String profesorID = request.getParameter("id");
@@ -285,7 +244,7 @@ public class ProfessorServlet extends HttpServlet {
         Gson gson = new Gson();
         ProfessorDAOImpl professorDAO = new ProfessorDAOImpl();
         ProfessorDTO professorDTO = new ProfessorDTO();
-        //response.setContentType("application/json");
+
         int professor_id = Integer.parseInt(request.getParameter("id"));
 
         if (fullData) {

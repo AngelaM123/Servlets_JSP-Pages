@@ -93,17 +93,5 @@
     </center>
 </div><!-- /.container -->
 
-<!--
-    <script>
-        debugger;
-
-       // document.write("You will be redirected to facultyList page in 60 seconds");
-        setTimeout(  function redirect()
-        {
-            window.location.href = "http://localhost:8080/FacultyServlet?action=all";
-        }, 60000);
-    </script>
--->
-
 </body>
 </html>

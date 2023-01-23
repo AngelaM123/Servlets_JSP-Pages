@@ -1,5 +1,7 @@
 package DTO;
 
+import java.util.Objects;
+
 public class SubjectDTO {
 
     private Integer id;
@@ -69,5 +71,18 @@ public class SubjectDTO {
                 ", semester='" + semester + '\'' +
                 ", profName='" + profName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubjectDTO that = (SubjectDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(credits, that.credits) && Objects.equals(name, that.name) && Objects.equals(semester, that.semester) && Objects.equals(profName, that.profName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, credits, name, semester, profName);
     }
 }

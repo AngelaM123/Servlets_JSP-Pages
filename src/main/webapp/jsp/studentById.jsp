@@ -22,38 +22,6 @@
 <body>
 
 
-<!--
-  <div class="container">
-    <form method="GET" action="/FacultyServlet">
-	    <div class="form-group">
-        <input type="text" name="action" value="update" style="display: none"/>
-		    </div>
-	    <div class="form-group">
-		<label for="id">Faculty Id</label>
-        <input type="text" name="id" value="${faculty.id}" style="display: none"/>
-		    </div>
-		<div class="form-group">
-		 <label for="name">Faculty Name:</label>
-        <input type="text" name="name" value="${faculty.name}"/>
-		    </div>
-		<div class="form-group">
-		<label for="location">faculty location:</label>
-        <input type="text" name="location" value="${faculty.location}"/>
-		    </div>
-		<div class="form-group">
-		<label for="study_field">faculty study_field:</label>
-        <input type="text" name="study_field" value="${faculty.study_field}"/>
-		    </div>
-		<div class="form-group">
-        <input type="submit" value="Update"/>
-		</div>
-    </form>
-		</div>
-
-		</br></br></br></br>
-
--->
-
 <div class="container">
 
     <form class="well form-horizontal" action="/StudentServlet" method="post" id="contact_form">

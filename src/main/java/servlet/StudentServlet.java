@@ -1,25 +1,20 @@
 package servlet;
 
-import DAO.Impl.FacultyDAOImpl;
+
 import DAO.Impl.StudentDAOImpl;
-import DAO.StudentDAO;
 import DTO.StudentDTO;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import model.Faculty;
 import model.Student;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/StudentServlet")
 public class StudentServlet extends HttpServlet {
@@ -38,28 +33,28 @@ public class StudentServlet extends HttpServlet {
         String action = request.getParameter("action");
         try {
 
-            if(request.getParameter("fullData") != null){
+            if (request.getParameter("fullData") != null) {
                 Boolean fullData = Boolean.parseBoolean(request.getParameter("fullData"));
                 jsondtoStudent(request, response, fullData);
-            } else{
+            } else {
 
                 switch (action) {
 
                     case "save":
                         saveStudent(request, response);
-                        request.getRequestDispatcher("jsp/successful.jsp").forward(request , response);
+                        request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
 
                         break;
 
                     case "delete":
-                        if(request.getParameter("id") != null){
-                            Student student =  studentById(request,response);
+                        if (request.getParameter("id") != null) {
+                            Student student = studentById(request, response);
                             //request.setAttribute("faculty", faculty);
                             deleteStudent(request, response);
                             request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("message"," id dosen't exist so student can't be deleted");
-                            request.getRequestDispatcher("jsp/error.jsp").forward(request,response);
+                            request.setAttribute("message", " id dosen't exist so student can't be deleted");
+                            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 
                         }
 
@@ -67,16 +62,16 @@ public class StudentServlet extends HttpServlet {
 
                     case "update":
                         updateStudent(request, response);
-                        request.setAttribute("link","http://localhost:8080/StudentServlet?action=all");
+                        request.setAttribute("link", "http://localhost:8080/StudentServlet?action=all");
 
-                        request.getRequestDispatcher("jsp/successful.jsp").forward(request , response);
+                        request.getRequestDispatcher("jsp/successful.jsp").forward(request, response);
                         break;
 
                     case "all":
 
                         List<Student> studentssListfromMethod = allStudents(request, response);
 
-                        if(request.getParameter("jsonFormat" ) != null) {
+                        if (request.getParameter("jsonFormat") != null) {
                             String studentJsonString = this.gson.toJson(studentssListfromMethod);
                             PrintWriter pr = response.getWriter();
                             pr.print(studentJsonString);
@@ -84,20 +79,20 @@ public class StudentServlet extends HttpServlet {
 
                         } else {
                             request.setAttribute("studentListfromJsp", studentssListfromMethod);
-                            request.getRequestDispatcher("jsp/studentList.jsp").forward(request , response);
+                            request.getRequestDispatcher("jsp/studentList.jsp").forward(request, response);
                         }
 
                         break;
 
                     case "byId":
-                        if(request.getParameter("id") != null){
-                            Student student =  studentById(request,response);
+                        if (request.getParameter("id") != null) {
+                            Student student = studentById(request, response);
 
                             request.setAttribute("student", student);
                             request.getRequestDispatcher("jsp/studentById.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("message","missing id in query parametar");
-                            request.getRequestDispatcher("jsp/error.jsp").forward(request,response);
+                            request.setAttribute("message", "missing id in query parametar");
+                            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 
                         }
 
@@ -111,20 +106,17 @@ public class StudentServlet extends HttpServlet {
                 }
             }
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new ServletException(ex);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    private List<Student>  allStudents(HttpServletRequest request, HttpServletResponse response)
+
+    private List<Student> allStudents(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<Student> studentHere = studentDAO.getAll();
-        /*String studentJsonString = this.gson.toJson(studentHere);
-        PrintWriter pr = response.getWriter();
-        pr.print(studentJsonString);
-        pr.flush();*/
+
         return studentHere;
 
     }
@@ -134,13 +126,11 @@ public class StudentServlet extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         Student student = studentDAO.getById(id);
-       /* String facultyJsonString = this.gson.toJson(faculty);
-        PrintWriter pr = response.getWriter();
-        pr.print(facultyJsonString);
-        pr.flush();*/
+
         return student;
 
     }
+
     private void saveStudent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
 
@@ -149,9 +139,9 @@ public class StudentServlet extends HttpServlet {
         String location = request.getParameter("location");
         int indeks = Integer.parseInt(request.getParameter("indeks"));
 
-        Student student = new Student(name, surname,location, indeks);
+        Student student = new Student(name, surname, location, indeks);
         studentDAO.save(student);
-       // response.sendRedirect("Indeks");
+
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response)
@@ -177,16 +167,14 @@ public class StudentServlet extends HttpServlet {
         }
 
         studentDAO.update(stud);
-       /* PrintWriter out = response.getWriter();
 
-        out.println("<p>successfully updated student</p>");
-        //response.sendRedirect("/");*/
     }
+
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         studentDAO.delete(id);
-       // response.sendRedirect("Indeks");
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -194,7 +182,7 @@ public class StudentServlet extends HttpServlet {
 
     }
 
-    private void jsondtoStudent(HttpServletRequest request, HttpServletResponse response,boolean fullData)
+    private void jsondtoStudent(HttpServletRequest request, HttpServletResponse response, boolean fullData)
             throws SQLException, Exception, IOException {
 
 
@@ -202,12 +190,12 @@ public class StudentServlet extends HttpServlet {
         StudentDAOImpl studentDAO = new StudentDAOImpl();
         StudentDTO studentDTO = new StudentDTO();
 
-        int student_id = Integer.parseInt(request.getParameter("id" ));
+        int student_id = Integer.parseInt(request.getParameter("id"));
 
-        if(fullData) {
+        if (fullData) {
 
             studentDTO = studentDAO.getStudentDTOwithUni(student_id);
-        }else{
+        } else {
 
             studentDTO = studentDAO.getStudentDTOwithOutUni(student_id);
 
