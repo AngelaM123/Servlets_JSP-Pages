@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class FacultyDTO {
 
-
     private Integer id;
     private String name;
     private String location;

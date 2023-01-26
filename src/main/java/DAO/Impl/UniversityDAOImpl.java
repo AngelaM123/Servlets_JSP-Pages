@@ -172,7 +172,6 @@ public class UniversityDAOImpl implements UniversityDAO {
             throw e;
         }
 
-        // return false;
     }
 
     @Override

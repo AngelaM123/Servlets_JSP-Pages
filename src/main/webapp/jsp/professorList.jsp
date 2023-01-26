@@ -101,7 +101,7 @@
             <th>Actions</th>
         </tr>
 
-        <%--        rabotni kjelii--%>
+
 
         <c:forEach var="professor" items="${professorListfromJsp}">
         <tr>

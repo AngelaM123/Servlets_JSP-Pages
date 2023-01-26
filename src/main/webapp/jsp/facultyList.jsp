@@ -115,7 +115,7 @@
 
                     <td>
                         <form>
-                                <%--  formaction="/FacultyServlet?action=byId&id=<c:out value='${faculty.getId()}' />" --%>
+
 
                             <a class="btn btn-warning"
                                href="http://localhost:8080/FacultyServlet?action=byId&id=<c:out value='${faculty.getId()}'/>"

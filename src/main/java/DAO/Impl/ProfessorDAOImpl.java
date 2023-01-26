@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProfessorDAOImpl implements ProfessorDAO {
-    // Connection connection = null;
+
     static Connection connection;
 
     static {

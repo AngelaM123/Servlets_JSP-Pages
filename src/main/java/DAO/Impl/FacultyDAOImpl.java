@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FacultyDAOImpl implements FacultyDAO {
-    // Connection connection = null;
+
     static Connection connection;
 
     static {
@@ -34,9 +34,9 @@ public class FacultyDAOImpl implements FacultyDAO {
             StringBuilder sql = new StringBuilder("select * from faculty where id = ");
             sql.append(id);
             ResultSet resultSet = statement.executeQuery(sql.toString());
-            //Faculty faculty = new Faculty();
+
             while (resultSet.next()) {
-                //System.out.println(resultSet.getString("name"));
+
                 faculty.setName(resultSet.getString("name"));
                 faculty.setId(resultSet.getInt("id"));
                 faculty.setLocation(resultSet.getString("location"));
@@ -96,8 +96,6 @@ public class FacultyDAOImpl implements FacultyDAO {
         }
 
     }
-
-        //i need to make explenation like this one for every method
 
         /**
         * @param faculty

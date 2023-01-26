@@ -72,7 +72,7 @@
             </form>
         </div>
     </center>
-</div><!-- /.container -->
+</div>
 
 </body>
 </html>

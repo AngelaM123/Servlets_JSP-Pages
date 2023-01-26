@@ -12,7 +12,6 @@ import java.util.List;
 
 public class SubjectDAOImpl implements SubjectDAO {
 
-    // Connection connection = null;
     static Connection connection;
 
     static {
